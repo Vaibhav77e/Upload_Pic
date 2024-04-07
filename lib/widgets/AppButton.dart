@@ -4,6 +4,7 @@ import 'package:upload_pic/consts/AppColors.dart';
 
 class AppButton extends StatelessWidget {
   double? height;
+  double? width;
   Color? backgroundColor;
   Color? textColor;
   String title;
@@ -12,6 +13,7 @@ class AppButton extends StatelessWidget {
 
    AppButton({
     this.height = 65,
+    this.width = double.infinity,
     this.backgroundColor = AppColors.primaryColor,
     this.textColor = AppColors.whiteColor,
     required this.title,
@@ -25,7 +27,7 @@ class AppButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
                 height: height,
-                width: double.infinity,
+                width:width,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: backgroundColor,

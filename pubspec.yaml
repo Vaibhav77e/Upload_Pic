@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
   fluttertoast: ^8.2.4
+  dotted_border: ^2.1.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +66,7 @@ flutter:
   assets:
     - assets/codeland.png
     - assets/logo.png
+    - assets/photoupload.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

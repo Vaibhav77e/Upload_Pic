@@ -4,6 +4,7 @@ import 'package:upload_pic/consts/AppColors.dart';
 
 import '../widgets/AppButton.dart';
 import '../widgets/AppTextField.dart';
+import 'upload_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -64,9 +65,7 @@ class _LoginPageState extends State<LoginPage> {
               title: "Login",
               fontSize: 22,
               onTap: (){
-                if(usernameController.text.isEmpty){
-                  
-                }
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UploadPhotoPage()));
               },
             ),
             const SizedBox(height: 40,), 
