@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upload_pic/consts/AppColors.dart';
-import 'package:upload_pic/widgets/toasts.dart';
+import 'package:upload_pic/screens/login_page.dart';
 
 import '../widgets/AppButton.dart';
 import '../widgets/AppTextField.dart';
-import 'signup_page.dart';
 import 'upload_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
@@ -57,57 +58,32 @@ class _LoginPageState extends State<LoginPage> {
                       ],),
               ),
             const SizedBox(height: 10,),
+            AppTextField(controller: nameController, hintText: "Name"),
+            const SizedBox(height: 10,),
             AppTextField(controller: usernameController,hintText: "Username",),
             const SizedBox(height: 20,),  
             AppTextField(controller: passwordController,hintText: "Password",),
             const SizedBox(height: 30,), 
-            
             AppButton(
               backgroundColor:AppColors.primaryColor,
               textColor:AppColors.whiteColor,
               title: "Login",
               fontSize: 22,
               onTap: (){
-                if(usernameController.text.trim().isEmpty){
-                  return Toasts.showWarningToast("User name can't left empty");
-                }
-                if(passwordController.text.trim().isEmpty){
-                  return Toasts.showWarningToast("User name can't left empty");
-                }
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>UploadPhotoPage()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UploadPhotoPage()));
               },
             ),
             const SizedBox(height: 10,),
             // Row(
             //   children: [
-            //     Text('Don\'t have an account',style: GoogleFonts.poppins().copyWith(fontSize: 14),),
+            //     Text('Already have an account',style: GoogleFonts.poppins().copyWith(fontSize: 14),),
             //     TextButton(onPressed: (){
-            //       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SignUpPage()));
+                  
+            //       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
             //     }, child: Text('Sign Up',
             //     style: GoogleFonts.poppins().copyWith(color: AppColors.primaryColor,fontSize: 14),))
             //   ],
             // ),
-            const SizedBox(height: 10,), 
-            Text('For Assistance & Login Details Contact: ',style: GoogleFonts.poppins().copyWith(fontSize: 14),),
-            buildContactMe(text:'English, Kannada & Telugu :',
-            phoneNumber: '7406333800'
-            ),
-            buildContactMe(text:'English, Kannada & Hindi :',
-            phoneNumber: '7406333800'
-            ),
-            const SizedBox(height: 40,), 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    buildAboutApp(text: 'v1.7'),
-                    buildAboutApp(text: '© 2023,'),
-                    buildAboutApp(text: 'Codeland Infosolutions Pvt Ltd.')
-                  ],
-                ),
-              ],
-            ),
             const SizedBox(height: 20,),
             ],
           ),
@@ -116,20 +92,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget buildContactMe({required String text,required String phoneNumber}){
-    return Row(
-              children: [
-                Text(text,style: GoogleFonts.poppins()),
-                Text(phoneNumber,
-                style: GoogleFonts.poppins().copyWith(fontSize: 12,
-                decoration: TextDecoration.underline,
-                color: AppColors.primaryColor,
-                decorationColor: AppColors.primaryColor)),
-              ],
-      );
-  }
-
-  Widget buildAboutApp({required String text}){
-    return Text(text,style: GoogleFonts.poppins().copyWith(fontSize: 13),);
-  }
 }
