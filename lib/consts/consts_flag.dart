@@ -1,0 +1,2 @@
+const NO_NETWORK = 0;
+const REQUEST_FAILED = 1;

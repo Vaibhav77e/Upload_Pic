@@ -74,16 +74,16 @@ class _SignUpPageState extends State<SignUpPage> {
               },
             ),
             const SizedBox(height: 10,),
-            // Row(
-            //   children: [
-            //     Text('Already have an account',style: GoogleFonts.poppins().copyWith(fontSize: 14),),
-            //     TextButton(onPressed: (){
+            Row(
+              children: [
+                Text('Already have an account',style: GoogleFonts.poppins().copyWith(fontSize: 14),),
+                TextButton(onPressed: (){
                   
-            //       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
-            //     }, child: Text('Sign Up',
-            //     style: GoogleFonts.poppins().copyWith(color: AppColors.primaryColor,fontSize: 14),))
-            //   ],
-            // ),
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginPage()));
+                }, child: Text('Sign Up',
+                style: GoogleFonts.poppins().copyWith(color: AppColors.primaryColor,fontSize: 14),))
+              ],
+            ),
             const SizedBox(height: 20,),
             ],
           ),

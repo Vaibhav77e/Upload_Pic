@@ -78,15 +78,15 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
             const SizedBox(height: 10,),
-            // Row(
-            //   children: [
-            //     Text('Don\'t have an account',style: GoogleFonts.poppins().copyWith(fontSize: 14),),
-            //     TextButton(onPressed: (){
-            //       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SignUpPage()));
-            //     }, child: Text('Sign Up',
-            //     style: GoogleFonts.poppins().copyWith(color: AppColors.primaryColor,fontSize: 14),))
-            //   ],
-            // ),
+            Row(
+              children: [
+                Text('Don\'t have an account',style: GoogleFonts.poppins().copyWith(fontSize: 14),),
+                TextButton(onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SignUpPage()));
+                }, child: Text('Sign Up',
+                style: GoogleFonts.poppins().copyWith(color: AppColors.primaryColor,fontSize: 14),))
+              ],
+            ),
             const SizedBox(height: 10,), 
             Text('For Assistance & Login Details Contact: ',style: GoogleFonts.poppins().copyWith(fontSize: 14),),
             buildContactMe(text:'English, Kannada & Telugu :',
