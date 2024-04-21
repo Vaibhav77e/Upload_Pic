@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upload_pic/consts/AppColors.dart';
 import 'package:upload_pic/screens/login_page.dart';
+import 'package:upload_pic/servicelocator.dart';
+import 'package:upload_pic/widgets/toasts.dart';
 
+import '../services/user_auth.dart';
 import '../widgets/AppButton.dart';
 import '../widgets/AppTextField.dart';
 import 'upload_page.dart';
@@ -19,6 +23,17 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  UserAuthentication userauth = getIt<UserAuthentication>();
+
+  Future<bool> createNewUser({required String name, required String username, required String password})async{
+    var isregistered = await userauth.registerNewUser(name: name, username: username, password: password);
+    if(isregistered==true){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,8 +84,24 @@ class _SignUpPageState extends State<SignUpPage> {
               textColor:AppColors.whiteColor,
               title: "Login",
               fontSize: 22,
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>UploadPhotoPage()));
+              onTap: ()async{
+                if(nameController.text.isEmpty){
+                  return Toasts.showWarningToast('Name can\'t be left empty');
+                }
+                if(usernameController.text.isEmpty){
+                  return Toasts.showWarningToast('Username can\'t be left empty');
+                }
+                if(passwordController.text.isEmpty){
+                  return Toasts.showWarningToast('Password can\'t be left empty');
+                }
+                bool success = await createNewUser(name: nameController.text.trim(),username: usernameController.text.trim(),password: passwordController.text.trim());
+                if(success){
+                  Toasts.showSuccessToast('User Created successfully');
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const LoginPage())); 
+                }else{
+                  Toasts.showFailureToast(userauth.errorMessage);
+                }
               },
             ),
             const SizedBox(height: 10,),

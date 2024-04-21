@@ -12,8 +12,13 @@ RxString? token = RxString("");
 RxString? saveToken;
 String errorMessage = '';
 
+
+
 Future<bool?> loginUser({required String username, required String password}) async {
-  var url = "$baseUrl/login";
+  // var url = "$baseUrl/auth/login-to-account";
+
+  var url ="https://upload-pic-backend.vercel.app/api/v1/auth/login-to-account";
+  
   errorMessage='';
   try {
     final data = {
@@ -45,9 +50,10 @@ Future<bool?> loginUser({required String username, required String password}) as
     // ignore: deprecated_member_use
     if (e is DioError) {
       // Extract error message from response
-      String error = e.response?.data['message'];
-      errorMessage = error;
-      print('Error Message : $errorMessage');
+      print('Error $e');
+      // String error = e.response?.data[];
+      // errorMessage = error;
+      // print('Error Message : $errorMessage');
       return false;
     } else {
       // Handle other types of errors
@@ -59,12 +65,12 @@ Future<bool?> loginUser({required String username, required String password}) as
 
 
 
-registerNewUser({
+Future<bool?> registerNewUser({
     required String name, 
     required String username,
     required String password,
 })async{
-  var url = "$baseUrl/register";
+  var url = "$baseUrl/auth/create-new-account";
 
   try {
   Map<String,dynamic> data = {
@@ -147,7 +153,7 @@ Future<bool> loadAuthData() async {
 
  Future<bool> userLogout(String token)async{
 
-  var url = "$baseUrl/logout";
+  var url = "$baseUrl/auth/logout";
   var params;
     try{
       ApiResponse apiResponse = await ApiService().get(url, token, params);

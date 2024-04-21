@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:upload_pic/consts/AppColors.dart';
+import 'package:upload_pic/servicelocator.dart';
+import 'package:upload_pic/services/user_auth.dart';
 import 'package:upload_pic/widgets/toasts.dart';
 
 import '../widgets/AppButton.dart';
 import '../widgets/AppTextField.dart';
+import '../widgets/Loader.dart';
 import 'signup_page.dart';
 import 'upload_page.dart';
 
@@ -18,17 +21,29 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  UserAuthentication userAuthentication = getIt<UserAuthentication>();
+  bool isUserLoggedIn = false;
+
+  Future<bool> loginUser({required String username,required String password})async{
+    bool? isLoggedIn = await userAuthentication.loginUser(username: username, password: password);
+    if(isLoggedIn==true){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal:26.0),
+        padding:  const EdgeInsets.symmetric(horizontal:26.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               SizedBox(
               height: 430,
               child: Column(
@@ -62,19 +77,31 @@ class _LoginPageState extends State<LoginPage> {
             AppTextField(controller: passwordController,hintText: "Password",),
             const SizedBox(height: 30,), 
             
-            AppButton(
+            isUserLoggedIn==true? Loader(): AppButton(
               backgroundColor:AppColors.primaryColor,
               textColor:AppColors.whiteColor,
               title: "Login",
               fontSize: 22,
-              onTap: (){
+              onTap: ()async{
+                setState(() {
+                  isUserLoggedIn = true;
+                });
                 if(usernameController.text.trim().isEmpty){
                   return Toasts.showWarningToast("User name can't left empty");
                 }
                 if(passwordController.text.trim().isEmpty){
                   return Toasts.showWarningToast("User name can't left empty");
                 }
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>UploadPhotoPage()));
+                bool isSuccess = await loginUser(username: usernameController.text.trim(),password: passwordController.text.trim());
+                if(isSuccess){
+                  Toasts.showSuccessToast("User Logged in Successfully");
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const UploadPhotoPage()));
+                }else{
+                  setState(() {
+                    isUserLoggedIn = false;
+                  });
+                  return Toasts.showFailureToast(userAuthentication.errorMessage);
+                }
               },
             ),
             const SizedBox(height: 10,),

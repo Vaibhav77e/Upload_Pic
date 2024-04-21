@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:upload_pic/servicelocator.dart';
 
 import 'screens/splashScreen.dart';
 
-void main() {
+void main() async{ 
+  await setUpServiceLoactor();
   runApp(const MyApp());
 }
 
